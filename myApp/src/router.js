@@ -23,6 +23,7 @@ export default new VueRouter({
   routes: [
     { path: '/', component: load('Index') }, // Default
     { path: '*', component: load('Error404') }, // Not found
-     { path: '/todo', component: load('ToDo') }
+     { path: '/todo', component: load('ToDo') },
+       { path: '/seat', component: load('butun') }
   ]
 })

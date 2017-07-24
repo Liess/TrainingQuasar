@@ -60,28 +60,47 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import feathersApp from 'FeathersService.js'
+let TodoService = feathersApp.services.todos
 export default {
+
+  mounted () {
+    TodoService.observe('data', (key, oldval, newval) => {
+      this.todos = newval
+    })
+  },
   data () {
-      return{ 
-        title: 'Hello batch 7',
-        todos: []
-  }
-},
-methods: {
-    add (ttl) {
-        let todo = {
-            user: 'Pogi',
-            task: ttl
-        }
-        this.todos.push(todo)
-        this.title = ''
-    },
-    remove (ttl) {
-        let index = _.indexOf(this.todos, ttl)
-        this.todos.splice(index, 1)
+    return {
+      title: 'Hello batch 7',
+      todos: []
     }
-    
-}
+  },
+  methods: {
+    add (ttl) {
+      let todo = {
+        user: 'Ernest',
+        task: ttl,
+        children: [
+                {name: 'hello'},
+                {name: 'tong'}
+        ]
+      }
+
+      TodoService.create(todo)
+      this.title = ''
+      this.task = ''
+    },
+    remove (todo) {
+   //   let index = _.indexOf(this.todos, ttl)
+
+   //   this.todos.splice(index, 1)
+      TodoService.create(todo._id)
+    },
+    search (todo) {
+      TodoService.find({query: {task: ''}}).then(result => {
+        console.log(result)
+      })
+    }
+  }
 }
 </script>
